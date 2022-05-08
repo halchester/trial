@@ -1,0 +1,37 @@
+[{
+    "id": 1,
+    "name": "Product A",
+    "price": 40.5,
+    "currency": "MMK"
+  },
+  {
+    "id": 2,
+    "name": "Product B",
+    "price": 20.6,
+    "currency": "MMK"
+  },
+  {
+    "id": 3,
+    "name": "Product C",
+    "price": 43,
+    "currency": "MMK"
+  },
+  {
+    "id": 4,
+    "name": "Product D",
+    "price": 25,
+    "currency": "MMK"
+  },
+  {
+    "id": 5,
+    "name": "Product E",
+    "price": 72,
+    "currency": "MMK"
+  },
+  {
+    "id": 6,
+    "name": "Product F",
+    "price": 80,
+    "currency": "MMK"
+  }
+]

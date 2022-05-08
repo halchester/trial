@@ -1,0 +1,72 @@
+@import "./variables";
+@import "./fonts.scss";
+
+// Default
+:root {
+    --dorminant_1: #{$dorminant_1};
+    --dorminant_2: #{$dorminant_2};
+
+    --color_base: #{$color_base};
+    --color_1: #{$color_1};
+    --color_2: #{$color_2};
+    --color_3: #{$color_3};
+
+    --title: #{$title};
+
+    --product_label: #{$product_label};
+    --product_description: #{$product_description};
+    --product_shadow: #{$product_shadow};
+    --cart_shadow: #{$cart_shadow};
+
+    --error: #{$error};
+    --notification: #{$notification};
+
+    --label: #{$label};
+    --input_value: #{$input_value};
+    --input_border: #{$input_border};
+}
+
+* {
+    box-sizing: border-box;
+    outline: none;
+}
+
+html {
+    color: var(--color_1);
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+svg {
+    display: block;
+    height: auto;
+}
+
+a:link,
+a:visited,
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.text-contents {
+    a:link,
+    a:visited,
+    a {
+        color: var(--color_3);
+    }
+    a {
+        transition: 0.3s all;
+
+        &.is-active {
+            color: var(--color_1);
+        }
+        &:hover {
+            color: var(--color_2);
+        }
+    }
+}
