@@ -84,7 +84,7 @@ const PageCheckout: FC<InterfaceCheckoutProps> = ({
                     email: `${values.email}`,
                 },
                 products: CartItems.map((product) => ({
-                    id: product.id,
+                    id: `${product.id}`,
                     quantity: product.qty,
                 })),
             }),

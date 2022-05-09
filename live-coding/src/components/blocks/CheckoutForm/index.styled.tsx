@@ -97,4 +97,16 @@ export const Actions = styled.article`
     justify-content: center;
 `
 
+export const SubmitButton = styled.button`
+    ${({ disabled }) => ({
+        border: "none",
+        backgroundColor: "#DCA16B",
+        color: "#fff",
+        borderRadius: 4,
+        padding: "12px 29px",
+        opacity: disabled ? 0.3 : 1,
+        cursor: disabled ? "not-allowed" : "pointer",
+    })}
+`
+
 export const Fields = styled.article.attrs(() => ({ className: "fields" }))``

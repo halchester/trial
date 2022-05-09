@@ -4,6 +4,7 @@ import { useCallback } from "react"
 
 // Misc
 import { wait } from "@app/utilities"
+import axios from "axios"
 
 type defaultState = {
     loading: boolean
@@ -121,13 +122,25 @@ export const postPayment = () => {
 
             // Api request
             // TODO: Bind endpoint request
-            await wait(3000)
-
-            // After Request state
-            setState((old: any) => ({
-                ...old,
-                loading: false,
-            }))
+            try {
+                const { data } = await axios.post(
+                    `https://nvy34v633k.execute-api.ap-southeast-1.amazonaws.com/prod/pay`,
+                    { requestId: "12344556", ...payload }
+                )
+                // After Request state
+                setState((old: any) => ({
+                    ...old,
+                    data: data,
+                    loading: false,
+                }))
+            } catch (err: any) {
+                console.log(err.response)
+                setState((old: any) => ({
+                    ...old,
+                    error: err.response,
+                    loading: false,
+                }))
+            }
         },
         [setState]
     )

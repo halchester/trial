@@ -2,6 +2,7 @@ import React, {
     FC,
     useCallback,
     useEffect,
+    useState,
     SyntheticEvent,
     ChangeEvent,
 } from "react"
@@ -12,6 +13,7 @@ import {
     validateCardNumber,
     formatCardNumber,
     formatCardExpiry,
+    parseCardType,
 } from "creditcardutils"
 
 // Styled Elements
@@ -26,6 +28,7 @@ import {
     Form,
     FieldGroups,
     FieldsMerge,
+    SubmitButton,
 } from "./index.styled"
 
 type TypeCheckoutFormDefaultValues = {
@@ -55,6 +58,7 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
     loading = false,
     submitText = "Submit",
 }) => {
+    const [cardType, setCardType] = useState<"visa" | "mastercard" | null>(null)
     const { models, register, updateModel } =
         useModels<TypeCheckoutFormDefaultValues>({
             defaultState,
@@ -111,7 +115,6 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
 
     const onSubmit = (e: SyntheticEvent) => {
         e.preventDefault()
-
         onSuccess(state.$data)
     }
 
@@ -132,6 +135,10 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
     useEffect(() => {
         setData(models)
     }, [models])
+
+    useEffect(() => {
+        setCardType(parseCardType(state.$data.card_number))
+    }, [state.$data.card_number])
 
     return (
         <Container>
@@ -161,7 +168,6 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
                             <FieldLabel error={!!getErrors("card_number")}>
                                 Card information
                             </FieldLabel>
-
                             <Input
                                 {...register.input({
                                     name: "card_number",
@@ -170,6 +176,36 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
                                 type="text"
                                 placeholder="1234 1234 1234 1234"
                             />
+                            <div
+                                style={{
+                                    float: "right",
+                                    position: "relative",
+                                    top: -27.5,
+                                    marginRight: 20,
+                                }}
+                            >
+                                <img
+                                    src={
+                                        cardType === "visa"
+                                            ? // below mastercard is because i don't have an active
+                                              // state for visa card in figma file, its default is 0.3 opacity
+                                              // so i had to improvise here
+                                              "/mastercard.png"
+                                            : "/visa.png"
+                                    }
+                                    style={{
+                                        opacity: cardType === "visa" ? 1 : 0.3,
+                                    }}
+                                />
+                                <img
+                                    src="/mastercard.png"
+                                    style={{
+                                        marginLeft: 15,
+                                        opacity:
+                                            cardType === "mastercard" ? 1 : 0.3,
+                                    }}
+                                />
+                            </div>
                         </FieldControl>
 
                         {getErrors("card_number") && (
@@ -203,6 +239,16 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
                                 type="text"
                                 placeholder="123"
                             />
+                            <div
+                                style={{
+                                    float: "right",
+                                    position: "relative",
+                                    top: -27.5,
+                                    marginRight: 20,
+                                }}
+                            >
+                                <img src="/cvc.png" />
+                            </div>
 
                             {getErrors("cvv") && (
                                 <ErrorMessage>{getErrors("cvv")}</ErrorMessage>
@@ -212,9 +258,9 @@ const CheckoutForm: FC<CheckoutFormProps> = ({
                 </FieldGroups>
 
                 <Actions>
-                    <button disabled={state.$auto_invalid || loading}>
+                    <SubmitButton disabled={state.$auto_invalid || loading}>
                         {submitText}
-                    </button>
+                    </SubmitButton>
                 </Actions>
             </Form>
         </Container>
